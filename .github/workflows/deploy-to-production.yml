@@ -39,5 +39,5 @@ jobs:
       with:
         github_token: ${{ secrets.VANTI_ADMIN_GITHUN_TOKEN }}
         branch: main
-        repository: "hammock-studio/git-flow-example"
+        repository: "hammock-studio/git-flow-example-"
         force: true
