@@ -1,0 +1,10 @@
+git status
+git add .
+git status
+git config --local user.email "tal@vanti-analytics.com"
+git config --local user.name karopastal
+git commit -m "Add changes" -a
+git status
+git fetch
+git checkout main
+git rebase staging
