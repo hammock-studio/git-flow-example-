@@ -1,0 +1,43 @@
+name: deploy to production
+# on:
+#   push:
+#     branches:
+#       - 'staging'
+#       - 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
+        fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
+    - name: Create local changes
+      run: |
+          echo "this is change in ${{ github.ref }}"
+          now=$(date +'%d-%m-%YT%H-%M-%S.txt') && touch $now
+          ls -la
+    - name: Commit files
+      run: |
+        git status
+        git add .
+        git status
+        git config --local user.email "${{ secrets.EMAIL }}"
+        git config --local user.name ${{ secrets.USERNAME }}
+        git commit -m "Add changes" -a
+        git status
+        git fetch
+        git checkout main
+        git rebase staging
+
+    - name: Validate context ref
+      run:
+        echo "this is change in ${{ github.ref }}"
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.VANTI_ADMIN_GITHUN_TOKEN }}
+        branch: main
+        repository: "hammock-studio/git-flow-example"
+        force: true
