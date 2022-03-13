@@ -19,10 +19,10 @@ jobs:
     - name: Enforce Commit Message Format
       run: |
         echo "Consider to put the validation on create pull request"
-
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.VANTI_ADMIN_GITHUN_TOKEN }}
-        branch: main
-        repository: "hammock-studio/git-flow-example-"
-        force: true
+    - name: Run e2e Tests
+    - run: |
+        echo "Run e2e test send default success() for testing"
+        echo "Consider writing the e2e trigger as component"
+    - name: Deploy To Staging
+    - run:
+        echo "Invode ECR + ECS deployment"
