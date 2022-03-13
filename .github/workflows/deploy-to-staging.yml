@@ -16,9 +16,21 @@ jobs:
     - name: Tag Staging Version
       run: |
         echo "Working on branch ${{ github.ref }}"
+        latest_version=$(git tag | sort -V | tail -1)
+        latest_version_major=$(latest_version | cut -c2-2)
+        latest_version_minor=$(latest_version | cut -c4-4)
+        echo "Latest Version: v${latest_version_major}.${latest_version_minor}"
+
+        let new_version_minor=latest_version_minor+1
+        new_version="v${latest_version_major}.${new_version_minor}"
+        echo "About to Tag ${new_version}"
+        git tag -a ${new_version} -m ${new_version}
+        git push prigin tag ${new_version}
+
     - name: Enforce Commit Message Format
       run: |
         echo "Consider to put the validation on create pull request"
+        echo "Enforce single commit message in order to deploy"
     - name: Run e2e Tests
     - run: |
         echo "Run e2e test send default success() for testing"
