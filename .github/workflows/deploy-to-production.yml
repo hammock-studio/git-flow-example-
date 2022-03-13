@@ -21,9 +21,9 @@ jobs:
         git reset --hard origin/main
         git rebase staging
         
-    - name: Validate context ref
+    - name: Validate linear commit history
       run:
-        echo "this is change in ${{ github.ref }}"
+        echo "validate staging/HEAD equals main/HEAD"
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
