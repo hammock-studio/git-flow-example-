@@ -5,7 +5,7 @@ on:
       - 'staging'
 
 jobs:
-  build:
+  staging-deployment:
     runs-on: ubuntu-latest
     steps:
     - name: "Checkout V2"
@@ -17,8 +17,8 @@ jobs:
       run: |
         echo "Working on branch ${{ github.ref }}"
         latest_version=$(git tag | sort -V | tail -1)
-        latest_version_major=$(latest_version | cut -c2-2)
-        latest_version_minor=$(latest_version | cut -c4-4)
+        latest_version_major=$(echo $latest_version | cut -c2-2)
+        latest_version_minor=$(echo $latest_version | cut -c4-4)
         echo "Latest Version: v${latest_version_major}.${latest_version_minor}"
 
         let new_version_minor=latest_version_minor+1
